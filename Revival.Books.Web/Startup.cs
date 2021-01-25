@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Revival.Books.Data;
 
 namespace Revival.Books.Web
 {
@@ -19,6 +21,12 @@ namespace Revival.Books.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<RevivalBooksDbContext>(opts =>
+            {
+                opts.EnableDetailedErrors();
+                opts.UseNpgsql(Configuration.GetConnectionString("revival.books.dev"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

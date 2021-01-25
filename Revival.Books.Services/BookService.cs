@@ -13,9 +13,8 @@ namespace Revival.Books.Services
         private readonly RevivalBooksDbContext _db;
         
         public BookService(RevivalBooksDbContext db)
-        {
-            _db = db;
-        }
+            => (_db) = (db);
+            
         public async Task<IEnumerable<Book>> GetAllBooksAsync()
         {
             return await _db.Books.ToListAsync();
@@ -48,6 +47,6 @@ namespace Revival.Books.Services
 
             _db.Books.Remove(bookToDelete);
             await _db.SaveChangesAsync();
-         }
+        }
     }
 }

@@ -268,10 +268,7 @@ __pycache__/
 # tools/
 
 
-
-
 # vue.js 
-
 .DS_Store
 node_modules/
 /dist/
@@ -341,3 +338,12 @@ lib*.pc
 /Debug/
 /Release/
 /tmp_install/
+
+
+# makefile helpers
+libcharset-1.dll
+libgcc_s_dw2-1.dll
+libiconv-2.dll
+libintl-8.dll
+mingw-get.exe
+mingw32-make.exe
