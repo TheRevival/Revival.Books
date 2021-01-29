@@ -10,5 +10,6 @@ namespace Revival.Books.Services
         public Task<Book> GetBook(int bookId);
         public Task AddBook(Book book);
         public Task DeleteBook(int bookId);
+        public Task UpdateBook(int bookId, Book newBook);
     }
 }

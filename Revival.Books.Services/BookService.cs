@@ -49,5 +49,19 @@ namespace Revival.Books.Services
             _db.Books.Remove(bookToDelete);
             await _db.SaveChangesAsync();
         }
+        public async Task UpdateBook(int bookId, Book newBook)
+        {
+            var bookToUpdate = await _db.Books.FindAsync(bookId);
+            
+            if(bookToUpdate is null)
+            {
+                throw new BookIsNotExistsException($"Book with the given id isn't exists! Crushed here: {nameof(UpdateBook)}");
+            }
+
+            bookToUpdate = newBook;
+            
+            _db.Books.Update(bookToUpdate);
+            await _db.SaveChangesAsync();
+        }
     }
 }

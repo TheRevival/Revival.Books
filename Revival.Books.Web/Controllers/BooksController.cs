@@ -51,6 +51,21 @@ namespace Revival.Books.Web.Controllers
             return Ok($"Book created: {book.Title}");
         }
         
+        [HttpPatch("/api/books/{id}")]
+        public async Task<IActionResult> UpdateBookById(int id, [FromBody]NewBookRequest newBook)
+        {
+            // TODO: Take out the logic with services from controller
+            var updatebleBook = await _bookService.GetBook(id);
+
+            var newUpdateBook = updatebleBook;
+            newUpdateBook.Author = newBook.Author;
+            newUpdateBook.Title = newBook.Title;
+
+            await _bookService.UpdateBook(id, newUpdateBook); 
+
+            return Ok(newUpdateBook);
+        } 
+        
         [HttpDelete("/api/books/{id}")]
         public async Task<IActionResult> DeleteBookById(int id)
         {
