@@ -6,9 +6,9 @@ namespace Revival.Books.Services
 {
     public interface IBookService
     {
-        public Task<IEnumerable<Book>> GetAllBooksAsync();
-        public Task<Book> GetBookAsync(int bookId);
-        public Task AddBookAsync(Book book);
-        public Task DeleteBookAsync(int bookId);
+        public Task<IEnumerable<Book>> GetAllBooks();
+        public Task<Book> GetBook(int bookId);
+        public Task AddBook(Book book);
+        public Task DeleteBook(int bookId);
     }
 }

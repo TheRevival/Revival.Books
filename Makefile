@@ -7,6 +7,6 @@ PROJECT_NAME ?= Revival.Books
 migrations:
 	cd ./Revival.Books.Data && dotnet ef --startup-project ../Revival.Books.Web/ migrations add $(mname) && cd ..
 db:
-	cd ./Revival.Books.Data && dotnet rf --startup-project ../Revival.Books.Web database update && cd ..
+	cd ./Revival.Books.Data && dotnet ef --startup-project ../Revival.Books.Web database update && cd ..
 hello:
 	echo 'test command to check is makefile works correct'

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Revival.Books.Data;
+using Revival.Books.Services;
 
 namespace Revival.Books.Web
 {
@@ -20,6 +21,8 @@ namespace Revival.Books.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            
             services.AddControllers();
 
             services.AddDbContext<RevivalBooksDbContext>(opts =>
@@ -27,6 +30,8 @@ namespace Revival.Books.Web
                 opts.EnableDetailedErrors();
                 opts.UseNpgsql(Configuration.GetConnectionString("revival.books.dev"));
             });
+
+            services.AddTransient<IBookService, BookService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,11 +41,20 @@ namespace Revival.Books.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+                
+            app.UseCors(builder => builder
+                // TODO: replace the localhost with the actual IP address 
+                .WithOrigins(
+                    "http://localhost:800"
+                )
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

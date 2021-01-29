@@ -1,37 +1,47 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Revival.Books.Data;
-
+using Revival.Books.Data.Models;
+using Revival.Books.Services;
+using Revival.Books.Web.RequestModel;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace Revival.Books.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class BooksController : ControllerBase
-    {    
+    {
         private readonly ILogger<BooksController> _logger;
 
-        private readonly RevivalBooksDbContext _db;
-
-        public BooksController(ILogger<BooksController> logger)
-            => (_logger) = (logger);
-        public BooksController(RevivalBooksDbContext db)
-            => (_db) = (db);
-        
-        public BooksController(ILogger<BooksController> logger, RevivalBooksDbContext db)
-            => (_logger, _db) = (logger, db);
-        
-        [HttpGet("/api/books")]
-        public ActionResult GetBooks()
+        private readonly IBookService _bookService;
+        public BooksController(ILogger<BooksController> logger, IBookService bookService)
         {
-            var books = _db.Books.ToList();
-            
-            return Ok("Books!");
+            _logger = logger;
+            _bookService = bookService;
         }
-        [HttpPost]
-        public void Post()
-        {
 
+        [HttpGet("/api/books")]
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        {
+            var books = await _bookService.GetAllBooks();
+            return Ok(books);
+        }
+
+        [HttpPost("/api/books")]
+        public ActionResult CreateBook([FromBody] NewBookRequest bookRequest)
+        {
+            var now = DateTime.Now;
+            var book = new Book
+            {
+                CreatedOn = now,
+                UpdatedOn = now,
+                Title = bookRequest.Title,
+                Author = bookRequest.Author
+            };
+
+            _bookService.AddBook(book);
+
+            return Ok($"Book created: {book.Title}");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Revival.Books.Data;
@@ -9,9 +10,10 @@ using Revival.Books.Data;
 namespace Revival.Books.Data.Migrations
 {
     [DbContext(typeof(RevivalBooksDbContext))]
-    partial class RevivalBooksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210128204437_BooksUpdates")]
+    partial class BooksUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
