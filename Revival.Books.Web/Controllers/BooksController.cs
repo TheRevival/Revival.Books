@@ -27,10 +27,17 @@ namespace Revival.Books.Web.Controllers
             return Ok(books);
         }
 
+        [HttpGet("/api/books/{id}")]
+        public async Task<IActionResult> GetBookById(int id)
+        {
+            var book = await _bookService.GetBook(id);
+            return Ok(book);
+        }
+
         [HttpPost("/api/books")]
         public ActionResult CreateBook([FromBody] NewBookRequest bookRequest)
         {
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var book = new Book
             {
                 CreatedOn = now,
@@ -42,6 +49,13 @@ namespace Revival.Books.Web.Controllers
             _bookService.AddBook(book);
 
             return Ok($"Book created: {book.Title}");
+        }
+        
+        [HttpDelete("/api/books/{id}")]
+        public async Task<IActionResult> DeleteBookById(int id)
+        {
+            await _bookService.DeleteBook(id);
+            return Ok($"Book deleted with ID: {id}");
         }
     }
 }
