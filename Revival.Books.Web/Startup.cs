@@ -49,14 +49,13 @@ namespace Revival.Books.Web
             app.UseCors(builder => builder
                 // TODO: replace the localhost with the actual IP address 
                 .WithOrigins(
-                    "http://localhost:800"
+                    "http://localhost:8080",
+                    "http://localhost:8081" 
                 )
                 .AllowAnyMethod()
                 .AllowAnyHeader()
             );
-            
-            app.UseAuthorization();
-
+        
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

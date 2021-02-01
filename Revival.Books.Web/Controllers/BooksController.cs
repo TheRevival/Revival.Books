@@ -36,8 +36,14 @@ namespace Revival.Books.Web.Controllers
 
         [HttpPost("/api/books")]
         public ActionResult CreateBook([FromBody] NewBookRequest bookRequest)
-        {
+        {   
+            if(ModelState.IsValid == false)
+            {
+                return BadRequest("Model state isn/'t valid.");
+            }
+             
             var now = DateTime.UtcNow;
+            
             var book = new Book
             {
                 CreatedOn = now,
@@ -57,13 +63,18 @@ namespace Revival.Books.Web.Controllers
             // TODO: Take out the logic with services from controller
             var updatebleBook = await _bookService.GetBook(id);
 
-            var newUpdateBook = updatebleBook;
-            newUpdateBook.Author = newBook.Author;
-            newUpdateBook.Title = newBook.Title;
+            var newUpdatedBook = new Book 
+            {
+                Id = updatebleBook.Id,
+                Title = newBook.Title,
+                CreatedOn = updatebleBook.CreatedOn,
+                UpdatedOn = updatebleBook.UpdatedOn,
+                Author = newBook.Author
+            };
 
-            await _bookService.UpdateBook(id, newUpdateBook); 
+            await _bookService.UpdateBook(id, newUpdatedBook); 
 
-            return Ok(newUpdateBook);
+            return Ok(newUpdatedBook);
         } 
         
         [HttpDelete("/api/books/{id}")]
