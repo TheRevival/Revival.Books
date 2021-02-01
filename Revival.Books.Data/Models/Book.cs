@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Revival.Books.Data.Models
 {
@@ -8,6 +9,6 @@ namespace Revival.Books.Data.Models
         public string Title { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
-        public string Author { get; set; }
+        public Author Author { get; set; }
     }
 }

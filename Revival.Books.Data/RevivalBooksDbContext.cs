@@ -8,7 +8,7 @@ namespace Revival.Books.Data
         public RevivalBooksDbContext(DbContextOptions options)
             : base(options) { }
             
-        public virtual DbSet<Book> Books { get; set; }
-        public virtual DbSet<BookReview> BookReviews { get; set; } 
+        public virtual DbSet<Book> Books { get; set; }    
+        public virtual DbSet<Author> Authors { get; set; }    
     }
 }

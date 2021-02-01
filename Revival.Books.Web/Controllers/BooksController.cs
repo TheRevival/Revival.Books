@@ -49,7 +49,7 @@ namespace Revival.Books.Web.Controllers
                 CreatedOn = now,
                 UpdatedOn = now,
                 Title = bookRequest.Title,
-                Author = bookRequest.Author
+                 Author = new Author(){ Name = bookRequest.Author }
             };
 
             _bookService.AddBook(book);
@@ -69,7 +69,7 @@ namespace Revival.Books.Web.Controllers
                 Title = newBook.Title,
                 CreatedOn = updatebleBook.CreatedOn,
                 UpdatedOn = updatebleBook.UpdatedOn,
-                Author = newBook.Author
+                Author = new Author(){ Name = newBook.Author }
             };
 
             await _bookService.UpdateBook(id, newUpdatedBook); 
